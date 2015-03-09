@@ -8,9 +8,7 @@ var Link = require('react-router').Link;
 var Blog = React.createClass({
     mixins: [FluxibleMixin],
     statics: {
-        storeListeners: {
-            onChange: [BlogStore]
-        }
+        storeListeners: [BlogStore]
     },
     getInitialState: function () {
         return this.getState();
@@ -46,7 +44,7 @@ var Blog = React.createClass({
                     _.map(this.state.list, function(post, key) {
                         return <li key={key}>
                             <div style={titleStyle}>
-                                <Link key={key} to={'/blog/' + key}>{post.title}</Link>
+                                <Link key={key} to="Post" params={{id: key}}>{post.title}</Link>
                                 <br/>
                                 <Moment datetime={post.published} style={momentStyle} />
                             </div>

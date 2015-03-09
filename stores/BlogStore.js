@@ -15,6 +15,11 @@ var BlogStore = createStore({
     initialize: function () {
         this.blogTitle = 'Blog';
         this.list = [];
+        this.post = {
+            title: 'Invalid Post', 
+            published: '2000/01/01',
+            content: 'Post not available.'
+        };
     },
     updateBlogTitle: function (title) {
         this.blogTitle = title;
@@ -30,15 +35,20 @@ var BlogStore = createStore({
     getList: function () {
         return this.list;
     },
+    getPost: function () {
+        return this.post;
+    },
     dehydrate: function () {
         return {
             blogTitle: this.blogTitle,
-            list: this.list
+            list: this.list,
+            post: this.post
         };
     },
     rehydrate: function (state) {
         this.blogTitle = state.blogTitle;
         this.list = state.list;
+        this.post = state.post;
     }
 });
 

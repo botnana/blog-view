@@ -12,7 +12,7 @@ var Blog = require('../../components/Blog.jsx');
 var Post = require('../../components/Post.jsx');
 var routes = (
     <Route name="app" path="/" handler={Application}>
-        <Route name="Post" handler={Post}/>
+        <Route name="Post" path="/post/:id" handler={Post}/>
         <DefaultRoute name="Blog" handler={Blog}/>
     </Route>
 );
