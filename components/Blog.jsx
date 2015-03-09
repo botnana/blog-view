@@ -3,6 +3,7 @@ var Moment  = require('./Moment.jsx');
 var FluxibleMixin = require('fluxible').Mixin;
 var BlogStore = require('../stores/BlogStore');
 var _ = require('lodash');
+var Link = require('react-router').Link;
     
 var Blog = React.createClass({
     mixins: [FluxibleMixin],
@@ -25,13 +26,6 @@ var Blog = React.createClass({
     onChange: function() {
         this.setState(this.getState());
     },
-    handleClick: function(ev) {
-        ev.preventDefault(); 
-        console.log(ev);
-        console.log(ev.nativeEvent);
-        console.log(ev.target);
-        console.log(ev.currentTarget);
-    },
     render: function() {
         var self = this;
         var momentStyle = {fontSize: '0.5em'};
@@ -52,7 +46,7 @@ var Blog = React.createClass({
                     _.map(this.state.list, function(post, key) {
                         return <li key={key}>
                             <div style={titleStyle}>
-                                <a key={key} href={self.props.context.blogPath + '/' + post.md}  onClick={self.handleClick}>{post.title}</a>
+                                <Link key={key} to={'/blog/' + key}>{post.title}</Link>
                                 <br/>
                                 <Moment datetime={post.published} style={momentStyle} />
                             </div>

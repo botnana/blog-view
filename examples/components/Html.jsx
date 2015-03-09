@@ -1,12 +1,10 @@
 'use strict';
 
 var React = require('react');
-var FluxibleMixin = require('fluxible').Mixin;
-var Component = React.createClass({
-    mixins: [FluxibleMixin],
+var Html = React.createClass({
     render: function() {
         return (
-        <html>
+            <html>
             <head>
                 <meta charSet="utf-8" />
                 <title>Botnana Blog View Examples</title>
@@ -15,13 +13,13 @@ var Component = React.createClass({
                 <link rel="stylesheet" href="/public/styles.css" />
             </head>
             <body>
-                <section id="blogapp" dangerouslySetInnerHTML={{__html: this.props.markup}}></section>
+                <section id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></section>
             </body>
             <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
             <script src="/public/js/client.js" defer></script>
-        </html>
+            </html>
         );
     }
 });
 
-module.exports = Component;
+module.exports = Html;

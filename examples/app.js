@@ -9,7 +9,7 @@ var Fluxible = require('fluxible');
 var fetchrPlugin = require('fluxible-plugin-fetchr');
 
 var app = new Fluxible({
-    component: React.createFactory(require('../components/Blog.jsx'))
+    component: require('./components/Routes.jsx')
 });
 
 app.plug(fetchrPlugin({
@@ -37,6 +37,7 @@ app.plug({
 });
 
 app.registerStore(require('../stores/BlogStore'));
+app.registerStore(require('./stores/ApplicationStore'));
 
 module.exports = app;
 
