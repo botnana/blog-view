@@ -9,8 +9,7 @@ var Html = React.createClass({
                 <meta charSet="utf-8" />
                 <title>Botnana Blog View Examples</title>
                 <meta name="viewport" content="width=device-width, user-scalable=no" />
-                <link rel="stylesheet" href="/public/base.css" />
-                <link rel="stylesheet" href="/public/styles.css" />
+                <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css" />
             </head>
             <body>
                 <section id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></section>
