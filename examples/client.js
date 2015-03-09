@@ -20,8 +20,8 @@ bootstrapDebug('rehydrating app');
 function RenderApp(context, Handler) {
     bootstrapDebug('React Rendering');
     var mountNode = document.getElementById('app');
-    var component = React.createFactory(Handler);
-    React.render(Component({context:context.getComponentContext()}), moundNode, function () {
+    var Component = React.createFactory(Handler);
+    React.render(Component({context:context.getComponentContext()}), mountNode, function () {
         bootstrapDebug('React Rendered');
     });
 }
