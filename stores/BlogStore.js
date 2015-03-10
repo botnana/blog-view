@@ -17,7 +17,7 @@ var BlogStore = createStore({
         this.list = [];
         this.post = {
             title: 'Invalid Post', 
-            published: '2000/01/01',
+            published: '2000-01-01',
             content: 'Post not available.'
         };
     },
