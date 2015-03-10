@@ -3,7 +3,7 @@ var Moment  = require('./Moment.jsx');
 var FluxibleMixin = require('fluxible').Mixin;
 var BlogStore = require('../stores/BlogStore');
 var _ = require('lodash');
-var Link = require('react-router').Link;
+var NavLink = require('flux-router-component').NavLink;
     
 var Blog = React.createClass({
     mixins: [FluxibleMixin],
@@ -44,7 +44,7 @@ var Blog = React.createClass({
                     _.map(this.state.list, function(post, key) {
                         return <li key={key}>
                             <div style={titleStyle}>
-                                <Link key={key} to="Post" params={{id: key}}>{post.title}</Link>
+                                <NavLink href={"/post/" + key}>{post.title}</NavLink>
                                 <br/>
                                 <Moment datetime={post.published} style={momentStyle} />
                             </div>

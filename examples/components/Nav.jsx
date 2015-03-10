@@ -5,18 +5,39 @@
 'use strict';
 
 var React = require('react');
-var Link = require('react-router').Link;
-var StateMixin = require('react-router').State;
+var NavLink = require('flux-router-component').NavLink;
 var Nav = React.createClass({
-    mixins: [StateMixin],
+    getDefaultProps: function () {
+        return {
+            selected: 'home',
+            links: {}
+        };
+    },
     render: function() {
+        var selected = this.props.selected,
+        links = this.props.links,
+        context = this.props.context,
+        linkHTML = Object.keys(links).map(function (name) {
+            var className = '',
+            link = links[name];
+            //print only link with label
+            if(link.label) {
+                if (selected === name) {
+                    className = 'pure-menu-selected';
+                }
+                return (
+                    <li className={className} key={link.path}>
+                    <NavLink routeName={link.page}>{link.label}</NavLink>
+                    </li>
+                );
+            }
+        });
         return (
             <ul className="pure-menu pure-menu-open pure-menu-horizontal">
-                <li className={this.isActive('/') ? 'pure-menu-selected' : ''}><Link to='/'>Home</Link></li>
-                <li className={this.isActive('/post') ? 'pure-menu-selected' : ''}><Link to='/post'>Post</Link></li>
+            {linkHTML}
             </ul>
         );
     }
 });
-module.exports = Nav;
 
+module.exports = Nav;
