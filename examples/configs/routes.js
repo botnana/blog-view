@@ -5,7 +5,7 @@
 'use strict';
 
 var showBlog = require('../../actions/showBlog');
-var showPost = require('../../actions/showPost');
+var showPosts = require('../../actions/showPosts');
 
 module.exports = {
     home: {
@@ -29,8 +29,8 @@ module.exports = {
         method: 'get',
         page: 'post',
         action: function (context, payload, done) {
-            context.executeAction(showPost, payload.params, function (err) {
-                context.dispatch('LOAD_PAGE', payload.params);
+            context.executeAction(showPosts, {md: [payload.params.md]}, function (err) {
+                context.dispatch('LOAD_PAGE', payload.params.md);
                 context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: 'Post | Blog | Botnana' });
                 done();
             });

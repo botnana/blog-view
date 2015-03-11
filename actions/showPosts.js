@@ -5,16 +5,16 @@
 'use strict';
 
 module.exports = function (context, payload, done) {
-    context.dispatch('RECEIVE_POST_START', payload);
+    context.dispatch('RECEIVE_POSTS_START', payload);
     context.service.read('blog', payload, {}, function (err, posts) {
         if (err) {
-            console.log('showPost err');
+            console.log('showPosts err');
             console.log(err);
-            context.dispatch('RECEIVE_POST_FAILURE', payload);
+            context.dispatch('RECEIVE_POSTS_FAILURE', payload);
             done();
             return;
         }
-        context.dispatch('RECEIVE_POST_SUCCESS', posts[payload.md]);
+        context.dispatch('RECEIVE_POSTS_SUCCESS', {md: payload.md, posts: posts});
         done();
     });
 };
