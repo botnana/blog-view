@@ -10,7 +10,8 @@ var BlogStore = createStore({
     storeName: 'BlogStore',
     handlers: {
         'UPDATE_BLOG_TITLE': 'updateBlogTitle',
-        'RECEIVE_BLOG_SUCCESS': '_receiveBlog'
+        'RECEIVE_BLOG_SUCCESS': 'receiveBlog',
+        'RECEIVE_POST_SUCCESS': 'receivePost'
     },
     initialize: function () {
         this.blogTitle = 'Blog';
@@ -25,8 +26,12 @@ var BlogStore = createStore({
         this.blogTitle = title;
         this.emitChange();
     },
-    _receiveBlog: function(blog) {
+    receiveBlog: function(blog) {
         this.list = blog;
+        this.emitChange();
+    },
+    receivePost: function(post) {
+        this.post.content = post;
         this.emitChange();
     },
     getBlogTitle: function () {

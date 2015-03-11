@@ -5,6 +5,7 @@
 'use strict';
 
 var showBlog = require('../../actions/showBlog');
+var showPost = require('../../actions/showPost');
 
 module.exports = {
     home: {
@@ -24,13 +25,15 @@ module.exports = {
         }
     },
     post: {
-        path: '/post/:id',
+        path: '/post/:md',
         method: 'get',
         page: 'post',
         action: function (context, payload, done) {
-            context.dispatch('LOAD_PAGE', { id: payload.params.id });
-            context.dispatch('UPDATE_PAGE_TITLE', { postTitle: payload.params.id + ' [Post] | Blog | Botnana' });
-            done();
+            context.executeAction(showPost, payload.params, function (err) {
+                context.dispatch('LOAD_PAGE', payload.params);
+                context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: 'Post | Blog | Botnana' });
+                done();
+            });
         }
     }
 };

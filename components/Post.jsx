@@ -8,17 +8,19 @@ var Post = React.createClass({
     statics: {
         storeListeners: [BlogStore]
     },
+    getInitialState: function () {
+        return this.getStore(BlogStore).getPost();
+    },
     onChange: function () {
     },
     render: function() {
-        var post = this.getStore(BlogStore).getPost();
         return (
             <div>
                 <header>
-                    <h1>{post.title}</h1>
-                    <Moment datetime={post.published} />
+                    <h1>{this.state.title}</h1>
+                    <Moment datetime={this.state.published} />
                 </header>
-                <span dangerouslySetInnerHTML={{__html: post.content}} />
+                <span dangerouslySetInnerHTML={{__html: this.state.content}} />
             </div>
         );
     }
