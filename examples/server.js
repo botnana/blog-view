@@ -30,7 +30,7 @@ server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use(function (req, res, next) {
     var context = app.createContext({
-        blogPath: 'botnana-blog',
+        blogPath: '/post',
         req: req, // The fetchr plugin depends on this
         xhrContext: {
             _csrf: req.csrfToken() // Make sure all XHR requests have the CSRF token

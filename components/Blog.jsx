@@ -44,7 +44,7 @@ var Blog = React.createClass({
                     _.map(this.state.list, function(post, key) {
                         return <li key={key}>
                             <div style={titleStyle}>
-                                <NavLink href={"/post/" + post.md}>{post.title}</NavLink>
+                                <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
                                 <br/>
                                 <Moment datetime={post.published} style={momentStyle} />
                             </div>

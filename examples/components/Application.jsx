@@ -29,7 +29,7 @@ var Application = React.createClass({
         //choose the right page based on the route
         switch (this.state.currentPageName) {
             case 'home':
-                output = <Blog/>;
+                output = <Blog blogPath={this.props.context.blogPath}/>;
                 break;
             case 'post':
                 output = <Post context={this.props.context}/>;
@@ -42,6 +42,13 @@ var Application = React.createClass({
                 {output}
             </div>
         );
+    },
+    componentDidUpdate: function(prevProps, prevState) {
+        var newState = this.state;
+        if (newState.pageTitle === prevState.pageTitle) {
+            return;
+        }
+        document.title = newState.pageTitle;
     }
 });
 
