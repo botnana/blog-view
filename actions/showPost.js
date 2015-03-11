@@ -6,7 +6,7 @@
 
 module.exports = function (context, payload, done) {
     context.dispatch('RECEIVE_POST_START', payload);
-    context.service.read('blog', {md: payload.md}, {}, function (err, post) {
+    context.service.read('blog', payload, {}, function (err, posts) {
         if (err) {
             console.log('showPost err');
             console.log(err);
@@ -14,7 +14,7 @@ module.exports = function (context, payload, done) {
             done();
             return;
         }
-        context.dispatch('RECEIVE_POST_SUCCESS', post[payload.md]);
+        context.dispatch('RECEIVE_POST_SUCCESS', posts[payload.md]);
         done();
     });
 };
