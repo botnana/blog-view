@@ -15,6 +15,7 @@ var Html = React.createClass({
                 <meta name="viewport" content="width=device-width, user-scalable=no" />
                 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css" />
             </head>
+            <script src="/public/js/ace-builds/src/ace.js"></script>
             <body>
                 <section id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></section>
             </body>

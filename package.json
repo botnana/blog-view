@@ -1,6 +1,6 @@
 {
   "name": "botnana-blog-view",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Botnana Blog View based on Reactjs",
   "main": "index.js",
   "scripts": {
@@ -9,13 +9,14 @@
   "author": "Sirius Wu",
   "license": "ISC",
   "dependencies": {
+    "ace-builds": "git+https://github.com/ajaxorg/ace-builds",
     "botnana-blog-service": "git+ssh://botnana@botnana.mapacode.tw/botnana-blog-service.git",
     "flux-router-component": "^0.5.14",
     "fluxible": "^0.2.4",
     "fluxible-plugin-fetchr": "^0.2.3",
     "lodash": "^3.4.0",
-    "moment": "^2.9.0",
-    "react": "^0.12.2"
+    "react": "^0.12.0",
+    "moment": "^2.9.0"
   },
   "devDependencies": {
     "jsx-loader": "^0.12.2"

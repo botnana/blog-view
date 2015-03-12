@@ -17,6 +17,33 @@ var Post = React.createClass({
     onChange: function () {
         this.setState(this.getState());
     },
+    handleMsl: function(event) {
+        event.preventDefault();
+        console.log('handleMsl');
+    },
+    handleJavascript: function(event) {
+        event.preventDefault();
+        console.log('handleJavascript');
+    },
+    componentDidMount: function () {
+        var node = this.getDOMNode();
+        var editor, button;
+        var i;
+        var forms = node.querySelectorAll('form.msl, form.javascript');
+        console.log(forms);
+        for (i = 0; i < forms.length; ++i) {
+            editor = ace.edit(forms[i].querySelector('pre.editor'));
+            editor.setTheme("ace/theme/twilight");
+            button = forms[i].querySelector('button');
+            if(forms[i].classList.contains("msl")) {
+                editor.getSession().setMode("ace/mode/forth");
+                button.addEventListener("click", this.handleMsl, false);
+            } else if(forms[i].classList.contains("javascript")) {
+                editor.getSession().setMode("ace/mode/javascript");
+                button.addEventListener("click", this.handleJavascript, false);
+            }
+        }
+    },
     render: function() {
         var md;
         if (typeof this.state.md === "string") {
