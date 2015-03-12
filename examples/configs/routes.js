@@ -29,7 +29,7 @@ module.exports = {
         method: 'get',
         page: 'post',
         action: function (context, payload, done) {
-            context.executeAction(showPosts, {md: [payload.params.md]}, function (err) {
+            context.executeAction(showPosts, {md: payload.params.md}, function (err) {
                 context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: 'Post | Blog | Botnana' });
                 done();
             });

@@ -9,12 +9,21 @@ var Post = React.createClass({
         storeListeners: [BlogStore]
     },
     getInitialState: function () {
+        return this.getState();
+    },
+    getState: function () {
         return this.getStore(BlogStore).getPosts();
     },
     onChange: function () {
+        this.setState(this.getState());
     },
     render: function() {
-        var md = this.state.md[0];
+        var md;
+        if (typeof this.state.md === "string") {
+            md = this.state.md;
+        } else {
+            md = this.state.md[0];
+        }
         var post = this.state.posts[md];
         return (
             <div>

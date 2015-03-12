@@ -35,7 +35,6 @@ Botnana Blog View based on Yahoo's fluxible architecture.
 components/Blog.jsx 使用的是 Yahoo 的 flux-router-component，因此如果使用其他 router，必須另行提供 Blog.jsx。
 
 使用 Blog.jsx 必須先在 server.js 建造 context 時給予 blogPath。
-
     server.use(function (req, res, next) {
         var context = app.createContext({
             blogPath: '/post',
@@ -44,9 +43,23 @@ components/Blog.jsx 使用的是 Yahoo 的 flux-router-component，因此如果�
         ...
     });
 
-並在使用 Blog.jsx 時，給序 blogPath。
+在 render html 時應給予 context 為參數。
+
+    var exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
+    var Component = app.getComponent();
+    var html = React.renderToStaticMarkup(HtmlComponent({
+        state: exposed,
+        markup: React.renderToString(Component({context:context.getComponentContext()})),
+        context: context.getComponentContext()
+    }));
+    res.send(html);
+
+在使用 Blog.jsx 時，給序 blogPath。
 
     <Blog blogPath={this.props.context.blogPath}/>
+
+
+之後請參考 examples/configs/routes.js 中對 showBlog 及 showPosts 的使用。
 
 <h2>Note</h2>
 
