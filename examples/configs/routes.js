@@ -30,7 +30,6 @@ module.exports = {
         page: 'post',
         action: function (context, payload, done) {
             context.executeAction(showPosts, {md: [payload.params.md]}, function (err) {
-                context.dispatch('LOAD_PAGE', payload.params.md);
                 context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: 'Post | Blog | Botnana' });
                 done();
             });
