@@ -37,7 +37,7 @@ var Blog = React.createClass({
             paddingLeft: 0
         };
         return (
-            <div>
+            <div className="botnana-blog">
                 <h1>{this.state.blogTitle}</h1>
                 <ul style={ulStyle}>
                 { 

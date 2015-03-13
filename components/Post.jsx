@@ -53,7 +53,7 @@ var Post = React.createClass({
         }
         var post = this.state.posts[md];
         return (
-            <div>
+            <div className="botnana-post">
                 <header>
                     <h1>{post.title}</h1>
                     <Moment datetime={post.published} />
