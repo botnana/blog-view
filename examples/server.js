@@ -15,6 +15,7 @@ var navigateAction = require('flux-router-component').navigateAction;
 var React = require('react');
 var app = require('./app');
 var HtmlComponent = React.createFactory(require('./components/Html.jsx'));
+var docPath = __dirname + '/../node_modules/botnana-blog-service/examples/posts/';
 
 var server = express();
 //server.use(favicon(__dirname + '/../favicon.ico'));
@@ -25,7 +26,10 @@ server.use(bodyParser.json());
 server.use(csrf({cookie: true}));
 
 var fetchrPlugin = app.getPlugin('FetchrPlugin');
-fetchrPlugin.registerService(require('botnana-blog-service')(__dirname + '/../node_modules/botnana-blog-service/examples/posts/'));
+if (process.argv.length > 2) {
+    docPath = process.argv[2];
+}
+fetchrPlugin.registerService(require('botnana-blog-service')(docPath));
 server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use(function (req, res, next) {
