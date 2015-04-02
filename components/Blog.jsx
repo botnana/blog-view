@@ -47,6 +47,7 @@ var Blog = React.createClass({
                                 <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
                                 <br/>
                                 <Moment datetime={post.published} style={momentStyle} />
+                                <span style={momentStyle}> by {post.author}</span>
                             </div>
                             <div>
                                 <blockquote style={quoteStyle}>{post.preview}</blockquote>

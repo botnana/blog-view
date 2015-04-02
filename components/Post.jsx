@@ -57,6 +57,7 @@ var Post = React.createClass({
                 <header>
                     <h1>{post.title}</h1>
                     <Moment datetime={post.published} />
+                    <span> by {post.author}</span>
                 </header>
                 <span dangerouslySetInnerHTML={{__html: post.content}} />
             </div>
