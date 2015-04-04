@@ -42,12 +42,23 @@ var Blog = React.createClass({
                 <ul style={ulStyle}>
                 { 
                     _.map(this.state.list, function(post, key) {
+                        var moment = '';
+                        var author = '';
+                        var price = '';
+                        if (post.published) {
+                            moment = <Moment datetime={post.published} style={momentStyle} />;
+                        }
+                        if (post.author) {
+                            author = <span style={momentStyle}> by {post.author}</span>;
+                        }
+                        if (post.price) {
+                            price = <span style={momentStyle}> 特價 {post.price} 元</span>;
+                        }
                         return <li key={key}>
                             <div style={titleStyle}>
                                 <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
                                 <br/>
-                                <Moment datetime={post.published} style={momentStyle} />
-                                <span style={momentStyle}> by {post.author}</span>
+                                {moment} {author} {price}
                             </div>
                             <div>
                                 <blockquote style={quoteStyle}>{post.preview}</blockquote>

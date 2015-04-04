@@ -52,12 +52,23 @@ var Post = React.createClass({
             md = this.state.md[0];
         }
         var post = this.state.posts[md];
+        var moment = '';
+        var author = '';
+        var price = '';
+        if (post.published) {
+            moment = <Moment datetime={post.published} />;
+        }
+        if (post.author) {
+            author = <span> by {post.author}</span>;
+        }
+        if (post.price) {
+            price = <span> 特價 {post.price} 元</span>;
+        }
         return (
             <div className="botnana-post">
                 <header>
                     <h1>{post.title}</h1>
-                    <Moment datetime={post.published} />
-                    <span> by {post.author}</span>
+                    {moment} {author} {price}
                 </header>
                 <span dangerouslySetInnerHTML={{__html: post.content}} />
             </div>

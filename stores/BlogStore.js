@@ -21,8 +21,6 @@ var BlogStore = createStore({
             posts: {
                 "invalid.md": {
                     title: 'Invalid Post', 
-                    published: '2000-01-01',
-                    author: '',
                     content: 'Post not available.'
                 }
             }
