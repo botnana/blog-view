@@ -15,11 +15,12 @@ var navigateAction = require('flux-router-component').navigateAction;
 var React = require('react');
 var app = require('./app');
 var HtmlComponent = React.createFactory(require('./components/Html.jsx'));
-var docPath = __dirname + '/../node_modules/botnana-blog-service/examples/posts/';
+var docPath = __dirname + '/posts/';
 
 var server = express();
 //server.use(favicon(__dirname + '/../favicon.ico'));
 server.use('/public', express.static(__dirname + '/build'));
+server.use('/assets', express.static(__dirname + '/assets'));
 
 server.use(cookieParser());
 server.use(bodyParser.json());

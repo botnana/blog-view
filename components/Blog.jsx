@@ -34,6 +34,7 @@ var Blog = React.createClass({
                         var moment = '';
                         var author = '';
                         var price = '';
+                        var img = '';
                         if (post.published) {
                             moment = <Moment datetime={post.published} />;
                         }
@@ -43,9 +44,16 @@ var Blog = React.createClass({
                         if (post.price) {
                             price = <span>特價 {post.price} 元</span>;
                         }
+                        if (post.img) {
+                            img =
+                                <div className="thumb">
+                                    <NavLink href={self.props.blogPath + "/" + post.md}>
+                                        <img src={"/assets/img/" + post.img}></img>
+                                    </NavLink>
+                                </div>;
+                        }
                         return <article key={key}>
-                            <div className="thumb">
-                            </div>
+                            {img}
                             <header>
                                 <h3>
                                     <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>

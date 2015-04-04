@@ -14,8 +14,8 @@ var Html = React.createClass({
                 <title>{this.getStore(ApplicationStore).getPageTitle()}</title>
                 <meta name="viewport" content="width=device-width, user-scalable=no" />
                 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css" />
-                <link rel="stylesheet" href="/public/assets/editor.css" />
-                <link rel="stylesheet" href="/public/assets/blog.css" />
+                <link rel="stylesheet" href="/assets/editor.css" />
+                <link rel="stylesheet" href="/assets/blog.css" />
             </head>
             <script src="/public/js/ace-builds/src/ace.js"></script>
             <body>
