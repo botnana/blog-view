@@ -28,7 +28,7 @@ var Blog = React.createClass({
         var self = this;
         return (
             <div className="botnana-blog">
-                <h1>{this.state.blogTitle}</h1>
+                <h2>{this.state.blogTitle}</h2>
                 { 
                     _.map(this.state.list, function(post, key) {
                         var moment = '';
