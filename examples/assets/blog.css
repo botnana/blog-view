@@ -1,3 +1,26 @@
+.botnana-blog article h3 {
+    font-size: 1.75em;
+    margin: 0px;
+    padding: 0px;
+}
+
+.botnana-blog article p {
+    padding: 1.15em 0px;
+    margin: 0px 0px;
+    font-size: 0.825em;
+    font-weight: bold;
+}
+
+.botnana-blog h3 a {
+    text-decoration: none;
+    font-weight: inherit;
+}
+
+.botnana-blog article blockquote {
+    margin: 0px 1em 1em 1em;
+    font-style: italic;
+}
+
 .botnana-blog {
     padding-left: 10%;
     padding-right: 10%;

@@ -26,48 +26,40 @@ var Blog = React.createClass({
     },
     render: function() {
         var self = this;
-        var momentStyle = {fontSize: '0.5em'};
-        var quoteStyle = {
-            margin: '0 1em 1em 1em',
-            fontStyle: 'italic'
-        };
-        var titleStyle = {fontSize: '1.5em'};
-        var ulStyle = {
-            listStyle: 'none',
-            paddingLeft: 0
-        };
         return (
             <div className="botnana-blog">
                 <h1>{this.state.blogTitle}</h1>
-                <ul style={ulStyle}>
                 { 
                     _.map(this.state.list, function(post, key) {
                         var moment = '';
                         var author = '';
                         var price = '';
                         if (post.published) {
-                            moment = <Moment datetime={post.published} style={momentStyle} />;
+                            moment = <Moment datetime={post.published} />;
                         }
                         if (post.author) {
-                            author = <span style={momentStyle}> by {post.author}</span>;
+                            author = <span>by {post.author}</span>;
                         }
                         if (post.price) {
-                            price = <span style={momentStyle}> 特價 {post.price} 元</span>;
+                            price = <span>特價 {post.price} 元</span>;
                         }
-                        return <li key={key}>
-                            <div style={titleStyle}>
-                                <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
-                                <br/>
-                                {moment} {author} {price}
+                        return <article key={key}>
+                            <div className="thumb">
                             </div>
-                            <div>
-                                <blockquote style={quoteStyle}>{post.preview}</blockquote>
-                            </div>
-                        </li>
+                            <header>
+                                <h3>
+                                    <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
+                                </h3>
+                                <p>
+                                    {moment} {author} {price}
+                                </p>
+                                <blockquote>{post.preview}</blockquote>
+                            </header>
+                            <div className="clr"/>
+                        </article>
                     })
 
                 }
-                </ul>
                 <div id="post">
                 </div>
           </div>
