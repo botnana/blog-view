@@ -25,6 +25,11 @@
     font-size: 1.75em;
     margin: 0px;
     padding: 0px;
+    color: #4E5E6A;
+}
+
+.botnana-blog article a {
+    color: #4E5E6A;
 }
 
 .botnana-blog article p {
