@@ -3,8 +3,8 @@
  */
 'use strict';
 
-var _posts = {
-    section: 'My Blog',
+var _posts = [{
+    section: 'Codrops',
     posts: [
         {
             title: 'Freebie: “Forkio” One Page Website Template',
@@ -19,7 +19,11 @@ var _posts = {
             img: 'organicfood-v1-codrops-wojciechzasina-thumbnail.jpg',
             author: 'Sirius Wu',
             preview: 'A set of 30 organic food icons that come in all common (vector-based) formats. The food icon set is perfect for modern food related projects.'
-        },
+        }
+    ]
+}, {
+    section: 'Botbone',
+    posts: [
         {
             title: 'Botbone 入門',
             md: 'botbone-getting-started.md',
@@ -29,6 +33,6 @@ var _posts = {
             preview: 'BotBone Getting Started Guide'
         }
     ]
-};
+}];
 
 module.exports = _posts;

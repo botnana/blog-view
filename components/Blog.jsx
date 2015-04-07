@@ -74,9 +74,15 @@ var Blog = React.createClass({
         this.setState(this.getState());
     },
     render: function() {
+        var self = this;
+        var sections = _.map(this.state.list, function(section, key) {
+            return ( 
+                <Section key={key} blogPath={self.props.blogPath} list={self.state.list[key]} />
+            );
+        });
         return (
             <div className="botnana-blog">
-                <Section blogPath={this.props.blogPath} list={this.state.list} />
+                {sections}
             </div>
         );
     }
