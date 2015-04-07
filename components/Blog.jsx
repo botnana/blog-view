@@ -5,32 +5,14 @@ var BlogStore = require('../stores/BlogStore');
 var _ = require('lodash');
 var NavLink = require('flux-router-component').NavLink;
     
-var Blog = React.createClass({
-    mixins: [FluxibleMixin],
-    statics: {
-        storeListeners: [BlogStore]
-    },
-    getInitialState: function () {
-        return this.getState();
-    },
-    getState: function () {
-        var store = this.getStore(BlogStore);
-        return {
-            nowShowing: this.state && this.state.nowShowing || 'ALL_TODOS',
-            blogTitle: store.blogTitle, 
-            list: store.getList()
-        };
-    },
-    onChange: function() {
-        this.setState(this.getState());
-    },
+var Section = React.createClass({
     render: function() {
         var self = this;
         return (
-            <div className="botnana-blog">
-                <h2>{this.state.blogTitle}</h2>
+            <div className="botnana-blog-section">
+                <h2>{this.props.list.section}</h2>
                 { 
-                    _.map(this.state.list, function(post, key) {
+                    _.map(this.props.list.posts, function(post, key) {
                         var moment = '';
                         var author = '';
                         var price = '';
@@ -66,11 +48,36 @@ var Blog = React.createClass({
                             <div className="clr"/>
                         </article>
                     })
-
                 }
-                <div id="post">
-                </div>
-          </div>
+            </div>
+        );
+    }
+});
+
+var Blog = React.createClass({
+    mixins: [FluxibleMixin],
+    statics: {
+        storeListeners: [BlogStore]
+    },
+    getInitialState: function () {
+        return this.getState();
+    },
+    getState: function () {
+        var store = this.getStore(BlogStore);
+        return {
+            nowShowing: this.state && this.state.nowShowing || 'ALL_TODOS',
+            blogTitle: store.blogTitle, 
+            list: store.getList()
+        };
+    },
+    onChange: function() {
+        this.setState(this.getState());
+    },
+    render: function() {
+        return (
+            <div className="botnana-blog">
+                <Section blogPath={this.props.blogPath} list={this.state.list} />
+            </div>
         );
     }
 });
