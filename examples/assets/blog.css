@@ -73,7 +73,7 @@
 .botnana-post .thumb {
     float: left;
     width: 50%;
-    padding: 0px 20px 1em 0px;
+    margin: 0px 20px 10px 0px;
 }
 
 .botnana-post .thumb img {
