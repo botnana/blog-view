@@ -76,7 +76,7 @@ var Post = React.createClass({
                 {img}
                 <header>
                     <h1>{post.title}</h1>
-                    {moment} {author} {price}
+                    <p>{moment} {author} {price}</p>
                 </header>
                 <span dangerouslySetInnerHTML={{__html: post.content}} />
             </div>
