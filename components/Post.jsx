@@ -55,6 +55,7 @@ var Post = React.createClass({
         var moment = '';
         var author = '';
         var price = '';
+        var img = '';
         if (post.published) {
             moment = <Moment datetime={post.published} />;
         }
@@ -64,8 +65,15 @@ var Post = React.createClass({
         if (post.price) {
             price = <span> 特價 {post.price} 元</span>;
         }
+        if (post.img) {
+            img =
+                <div className="thumb">
+                    <img src={"/assets/img/" + post.img}></img>
+                </div>;
+        }
         return (
             <div className="botnana-post">
+                {img}
                 <header>
                     <h1>{post.title}</h1>
                     {moment} {author} {price}
