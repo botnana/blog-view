@@ -51,7 +51,7 @@ var Post = React.createClass({
         } else {
             md = this.state.md[0];
         }
-        var post = this.state.posts[md];
+        var post = this.state.posts.data[0];
         var moment = '';
         var author = '';
         var price = '';
