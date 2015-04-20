@@ -10,9 +10,9 @@ var Section = React.createClass({
         var self = this;
         return (
             <div className="botnana-blog-section">
-                <h2>{this.props.list.section}</h2>
+                <h2>{this.props.sectionName}</h2>
                 { 
-                    _.map(this.props.list.posts, function(post, key) {
+                    _.map(this.props.list, function(post, key) {
                         var moment = '';
                         var author = '';
                         var price = '';
@@ -64,10 +64,24 @@ var Blog = React.createClass({
     },
     getState: function () {
         var store = this.getStore(BlogStore);
+        var list = store.getList().data;
+        var sectionNames = [];
+        var sections = {};
+        list.forEach(function(item) {
+            var idx = sectionNames.indexOf(item.tags);
+            if(idx < 0) {
+                sectionNames.push(item.tags);
+                sections[item.tags] = [item];
+            } else {;
+                sections[item.tags].push(item);
+            }
+        });
         return {
             nowShowing: this.state && this.state.nowShowing || 'ALL_TODOS',
             blogTitle: store.blogTitle, 
-            list: store.getList()
+            list: list,
+            sectionNames: sectionNames,
+            sections: sections
         };
     },
     onChange: function() {
@@ -75,9 +89,9 @@ var Blog = React.createClass({
     },
     render: function() {
         var self = this;
-        var sections = _.map(this.state.list, function(section, key) {
+        var sections = _.map(self.state.sectionNames, function(sectionName) {
             return ( 
-                <Section key={key} blogPath={self.props.blogPath} list={self.state.list[key]} />
+                <Section key={sectionName} blogPath={self.props.blogPath} list={self.state.sections[sectionName]} sectionName={sectionName}/>
             );
         });
         return (
