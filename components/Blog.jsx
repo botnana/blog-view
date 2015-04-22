@@ -68,13 +68,15 @@ var Blog = React.createClass({
         var sectionNames = [];
         var sections = {};
         list.forEach(function(item) {
-            var idx = sectionNames.indexOf(item.tags);
-            if(idx < 0) {
-                sectionNames.push(item.tags);
-                sections[item.tags] = [item];
-            } else {;
-                sections[item.tags].push(item);
-            }
+            item.tags.forEach(function(tag) {
+                var idx = sectionNames.indexOf(tag);
+                if(idx < 0) {
+                    sectionNames.push(tag);
+                    sections[tag] = [item];
+                } else {;
+                    sections[tag].push(item);
+                }
+            });
         });
         return {
             nowShowing: this.state && this.state.nowShowing || 'ALL_TODOS',
