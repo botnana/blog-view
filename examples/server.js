@@ -30,7 +30,7 @@ var fetchrPlugin = app.getPlugin('FetchrPlugin');
 if (process.argv.length > 2) {
     docPath = process.argv[2];
 }
-fetchrPlugin.registerService(require('botnana-blog-service')(docPath));
+fetchrPlugin.registerService(require('botnana-blog-service').fs(docPath));
 server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use(function (req, res, next) {
