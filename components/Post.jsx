@@ -45,13 +45,7 @@ var Post = React.createClass({
         }
     },
     render: function() {
-        var md;
-        if (typeof this.state.md === "string") {
-            md = this.state.md;
-        } else {
-            md = this.state.md[0];
-        }
-        var post = this.state.posts.data[0];
+        var post = this.state.posts.data;
         var moment = '';
         var author = '';
         var price = '';
