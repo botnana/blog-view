@@ -62,7 +62,7 @@ var Post = React.createClass({
         if (post.img) {
             img =
                 <div className="thumb">
-                    <img src={"/assets/img/" + post.img}></img>
+                    <img src={post.img}></img>
                 </div>;
         }
         return (

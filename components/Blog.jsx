@@ -30,7 +30,7 @@ var Section = React.createClass({
                             img =
                                 <div className="thumb">
                                     <NavLink href={self.props.blogPath + "/" + post.md}>
-                                        <img src={"/assets/img/" + post.img}></img>
+                                        <img src={post.img}></img>
                                     </NavLink>
                                 </div>;
                         }
