@@ -11,20 +11,14 @@ var BlogStore = createStore({
     handlers: {
         'UPDATE_BLOG_TITLE': 'updateBlogTitle',
         'RECEIVE_BLOG_SUCCESS': 'receiveBlog',
-        'RECEIVE_POSTS_SUCCESS': 'receivePosts'
+        'RECEIVE_BLOG_FAILURE': 'receiveBlogFailure',
+        'RECEIVE_POST_SUCCESS': 'receivePost',
+        'RECEIVE_POST_FAILURE': 'receivePostFailure',
     },
     initialize: function () {
         this.blogTitle = 'Blog';
-        this.list = [];
-        this.posts = {
-            md: ['invalid.md'],
-            posts: {
-                "invalid.md": {
-                    title: 'Invalid Post', 
-                    content: 'Post not available.'
-                }
-            }
-        };
+        this.list = {};
+        this.post = {};
     },
     updateBlogTitle: function (title) {
         this.blogTitle = title;
@@ -34,8 +28,16 @@ var BlogStore = createStore({
         this.list = blog;
         this.emitChange();
     },
-    receivePosts: function(posts) {
-        this.posts = posts;
+    receiveBlogFailure: function(err) {
+        this.list = err;
+        this.emitChange();
+    },
+    receivePost: function(post) {
+        this.post = post;
+        this.emitChange();
+    },
+    receivePostFailure: function(err) {
+        this.post = err;
         this.emitChange();
     },
     getBlogTitle: function () {
@@ -44,20 +46,20 @@ var BlogStore = createStore({
     getList: function () {
         return this.list;
     },
-    getPosts: function () {
-        return this.posts;
+    getPost: function () {
+        return this.post;
     },
     dehydrate: function () {
         return {
             blogTitle: this.blogTitle,
             list: this.list,
-            posts: this.posts
+            post: this.post
         };
     },
     rehydrate: function (state) {
         this.blogTitle = state.blogTitle;
         this.list = state.list;
-        this.posts = state.posts;
+        this.post = state.post;
     }
 });
 

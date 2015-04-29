@@ -15,7 +15,7 @@ var navigateAction = require('flux-router-component').navigateAction;
 var React = require('react');
 var app = require('./app');
 var HtmlComponent = React.createFactory(require('./components/Html.jsx'));
-var docPath = __dirname + '/posts/';
+var blogConfig = require('./configs/blogConfig');
 
 var server = express();
 //server.use(favicon(__dirname + '/../favicon.ico'));
@@ -27,15 +27,12 @@ server.use(bodyParser.json());
 server.use(csrf({cookie: true}));
 
 var fetchrPlugin = app.getPlugin('FetchrPlugin');
-if (process.argv.length > 2) {
-    docPath = process.argv[2];
-}
-fetchrPlugin.registerService(require('botnana-blog-service').fs(docPath));
+fetchrPlugin.registerService(require('botnana-blog-service').configure(blogConfig));
 server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use(function (req, res, next) {
     var context = app.createContext({
-        blogPath: '/post',
+        blogPath: '/posts',
         req: req, // The fetchr plugin depends on this
         xhrContext: {
             _csrf: req.csrfToken() // Make sure all XHR requests have the CSRF token

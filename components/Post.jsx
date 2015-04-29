@@ -12,7 +12,7 @@ var Post = React.createClass({
         return this.getState();
     },
     getState: function () {
-        return this.getStore(BlogStore).getPosts();
+        return this.getStore(BlogStore).getPost();
     },
     onChange: function () {
         this.setState(this.getState());
@@ -45,36 +45,44 @@ var Post = React.createClass({
         }
     },
     render: function() {
-        var post = this.state.posts.data;
-        var moment = '';
-        var author = '';
-        var price = '';
-        var img = '';
-        if (post.published) {
-            moment = <Moment datetime={post.published} />;
+        if(this.state.errors) {
+            return (
+                <div className="botnana-post">
+                    {this.state.errors}
+                </div>
+            );
+        } else {
+            var post = this.state.post.data;
+            var moment = '';
+            var author = '';
+            var price = '';
+            var img = '';
+            if (post.published) {
+                moment = <Moment datetime={post.published} />;
+            }
+            if (post.author) {
+                author = <span> by {post.author}</span>;
+            }
+            if (post.price) {
+                price = <span> 特價 {post.price} 元</span>;
+            }
+            if (post.img) {
+                img =
+                    <div className="thumb">
+                        <img src={post.img}></img>
+                    </div>;
+            }
+            return (
+                <div className="botnana-post">
+                    {img}
+                    <header>
+                        <h1>{post.title}</h1>
+                        <p>{moment} {author} {price}</p>
+                    </header>
+                    <span dangerouslySetInnerHTML={{__html: post.content}} />
+                </div>
+            );
         }
-        if (post.author) {
-            author = <span> by {post.author}</span>;
-        }
-        if (post.price) {
-            price = <span> 特價 {post.price} 元</span>;
-        }
-        if (post.img) {
-            img =
-                <div className="thumb">
-                    <img src={post.img}></img>
-                </div>;
-        }
-        return (
-            <div className="botnana-post">
-                {img}
-                <header>
-                    <h1>{post.title}</h1>
-                    <p>{moment} {author} {price}</p>
-                </header>
-                <span dangerouslySetInnerHTML={{__html: post.content}} />
-            </div>
-        );
     }
 });
 
