@@ -1,0 +1,13 @@
+.console form {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.console legend {
+    border-bottom: 3px solid #F1F4F9;
+    margin: 0px 0px 1.5em;
+    padding: 0px 0px 0.5em;
+    color: #A0ADB6;
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+

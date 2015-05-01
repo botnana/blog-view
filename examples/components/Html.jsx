@@ -16,6 +16,7 @@ var Html = React.createClass({
                 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css" />
                 <link rel="stylesheet" href="/assets/editor.css" />
                 <link rel="stylesheet" href="/assets/blog.css" />
+                <link rel="stylesheet" href="/assets/console.css" />
             </head>
             <script src="/public/js/ace-builds/src/ace.js"></script>
             <body>
