@@ -14,11 +14,13 @@ var BlogStore = createStore({
         'RECEIVE_BLOG_FAILURE': 'receiveBlogFailure',
         'RECEIVE_POST_SUCCESS': 'receivePost',
         'RECEIVE_POST_FAILURE': 'receivePostFailure',
+        'CREATE_POST_SUCCESS': 'createPostSuccess'
     },
     initialize: function () {
         this.blogTitle = 'Blog';
         this.list = {};
         this.post = {};
+        this.consistentToServer = false;
     },
     updateBlogTitle: function (title) {
         this.blogTitle = title;
@@ -26,10 +28,15 @@ var BlogStore = createStore({
     },
     receiveBlog: function(blog) {
         this.list = blog;
+        this.consistentToServer = true;
         this.emitChange();
     },
     receiveBlogFailure: function(err) {
         this.list = err;
+        this.emitChange();
+    },
+    createPostSuccess: function(result) {
+        this.consistentToServer = false;
         this.emitChange();
     },
     receivePost: function(post) {
@@ -53,13 +60,15 @@ var BlogStore = createStore({
         return {
             blogTitle: this.blogTitle,
             list: this.list,
-            post: this.post
+            post: this.post,
+            consistentToServer: this.consistentToServer
         };
     },
     rehydrate: function (state) {
         this.blogTitle = state.blogTitle;
         this.list = state.list;
         this.post = state.post;
+        this.consistentToServer = state.consistentToServer;
     }
 });
 

@@ -4,6 +4,7 @@ var FluxibleMixin = require('fluxible').Mixin;
 var BlogStore = require('../stores/BlogStore');
 var _ = require('lodash');
 var NavLink = require('flux-router-component').NavLink;
+var showBlog = require('../actions/showBlog');
     
 var Section = React.createClass({
     render: function() {
@@ -65,6 +66,7 @@ var Blog = React.createClass({
     getState: function () {
         var store = this.getStore(BlogStore);
         var list = store.getList().data;
+        var consistentToServer = store.consistentToServer;
         var sectionNames = [];
         var sections = {};
         list.forEach(function(item) {
@@ -79,15 +81,18 @@ var Blog = React.createClass({
             });
         });
         return {
-            nowShowing: this.state && this.state.nowShowing || 'ALL_TODOS',
             blogTitle: store.blogTitle, 
             list: list,
             sectionNames: sectionNames,
-            sections: sections
+            sections: sections,
+            consistentToServer: consistentToServer
         };
     },
     onChange: function() {
         this.setState(this.getState());
+        if(!this.state.consistentToServer) {
+            this.props.context.executeAction(showBlog, {});
+        }
     },
     render: function() {
         var self = this;

@@ -32,7 +32,7 @@ var Application = React.createClass({
             case 'home':
                 output = <div>
                     <PostCreation context={this.props.context}/>
-                    <Blog blogPath={this.props.context.blogPath}/>
+                    <Blog context={this.props.context} blogPath={this.props.context.blogPath}/>
                 </div>;
                 break;
             case 'post':
