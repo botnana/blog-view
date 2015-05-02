@@ -13,6 +13,11 @@ var React = require('react');
 var createPost = require('../../actions/createPost');
 
 var Console = React.createClass({
+    getInitialState: function() {
+        return {
+            hiddenForm: true
+        };
+    },
     handleSubmit: function(ev) {
         ev.preventDefault();
         var post = {
@@ -27,11 +32,21 @@ var Console = React.createClass({
         this.refs.tags.getDOMNode().value = '';
         this.refs.marked.getDOMNode().value = '';
     },
+    handleCreation: function(ev) {
+        this.setState({hiddenForm: this.state.hiddenForm ? false : true});
+    },
+    handleUpdate: function(ev) {
+    },
+    handleDeletion: function(ev) {
+    },
     render: function() {
         return <div className="console">
-            <div className="buttons"><button className="pure-button">建立</button><button className="pure-button">修改</button><button className="pure-button">刪除</button></div>
+            <div className="buttons">
+                <button className="pure-button" onClick={this.handleCreation}>建立</button>
+                <button className="pure-button" onClick={this.handleUpdate}>修改</button>
+                <button className="pure-button" onClick={this.handleDeletion}>刪除</button></div>
             <div className="clr" />
-            <form className="pure-form">
+            <form ref="form" className={this.state.hiddenForm ? "pure-form hidden" : "pure-form"}>
                 <fieldset>
                     <legend>建立新文章</legend>
                     <div>
