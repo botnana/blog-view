@@ -38,6 +38,7 @@ var Section = React.createClass({
                         return <article key={key}>
                             {img}
                             <header>
+                                <input type="checkbox"/>
                                 <h3>
                                     <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
                                 </h3>

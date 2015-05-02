@@ -40,6 +40,10 @@
     color: #9DA8B0;
 }
 
+.botnana-blog article input {
+    float: right;
+}
+
 .botnana-blog article .clr {
     float: none;
     clear: both;

@@ -12,7 +12,7 @@
 var React = require('react');
 var createPost = require('../../actions/createPost');
 
-var PostCreation = React.createClass({
+var Console = React.createClass({
     handleSubmit: function(ev) {
         ev.preventDefault();
         var post = {
@@ -29,6 +29,8 @@ var PostCreation = React.createClass({
     },
     render: function() {
         return <div className="console">
+            <div className="buttons"><button className="pure-button">建立</button><button className="pure-button">修改</button><button className="pure-button">刪除</button></div>
+            <div className="clr" />
             <form className="pure-form">
                 <fieldset>
                     <legend>建立新文章</legend>
@@ -49,5 +51,5 @@ var PostCreation = React.createClass({
     }
 });
 
-module.exports = PostCreation;
+module.exports = Console;
 
