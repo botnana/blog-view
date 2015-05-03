@@ -10,9 +10,13 @@
 'use strict';
 
 var React = require('react');
+var FluxibleMixin = require('fluxible').Mixin;
+var BlogStore = require('../../stores/BlogStore');
 var createPost = require('../../actions/createPost');
+var deletePost = require('../../actions/deletePost');
 
 var Console = React.createClass({
+    mixins: [FluxibleMixin],
     getInitialState: function() {
         return {
             hiddenForm: true
@@ -38,6 +42,11 @@ var Console = React.createClass({
     handleUpdate: function(ev) {
     },
     handleDeletion: function(ev) {
+        var self = this;
+        var checked = this.getStore(BlogStore).checked;
+        checked.forEach(function(item) {
+            self.props.context.executeAction(deletePost, {md: item});
+        });
     },
     render: function() {
         return <div className="console">

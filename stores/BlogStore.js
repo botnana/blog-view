@@ -14,11 +14,15 @@ var BlogStore = createStore({
         'RECEIVE_BLOG_FAILURE': 'receiveBlogFailure',
         'RECEIVE_POST_SUCCESS': 'receivePost',
         'RECEIVE_POST_FAILURE': 'receivePostFailure',
-        'CREATE_POST_SUCCESS': 'createPostSuccess'
+        'CHECK_POST': 'checkPost',
+        'UNCHECK_POST': 'uncheckPost',
+        'CREATE_POST_SUCCESS': 'createPostSuccess',
+        'DELETE_POST_SUCCESS': 'deletePostSuccess'
     },
     initialize: function () {
         this.blogTitle = 'Blog';
         this.list = {};
+        this.checked = [],
         this.post = {};
         this.consistentToServer = false;
     },
@@ -36,6 +40,27 @@ var BlogStore = createStore({
         this.emitChange();
     },
     createPostSuccess: function(result) {
+        this.consistentToServer = false;
+        this.emitChange();
+    },
+    checkPost: function(payload) {
+        if(this.checked.indexOf(payload.md)<0) {
+            this.checked.push(payload.md);
+        }
+        this.emitChange();
+    },
+    uncheckPost: function(payload) {
+        var idx = this.checked.indexOf(payload.md);
+        if(idx>=0) {
+            this.checked.splice(idx, 1);
+        }
+        this.emitChange();
+    },
+    deletePostSuccess: function(result) {
+        var idx = this.checked.indexOf(result.md);
+        if(idx >= 0) {
+            this.checked.splice(idx, 1);
+        }
         this.consistentToServer = false;
         this.emitChange();
     },
@@ -60,6 +85,7 @@ var BlogStore = createStore({
         return {
             blogTitle: this.blogTitle,
             list: this.list,
+            checked: this.checked,
             post: this.post,
             consistentToServer: this.consistentToServer
         };
@@ -67,6 +93,7 @@ var BlogStore = createStore({
     rehydrate: function (state) {
         this.blogTitle = state.blogTitle;
         this.list = state.list;
+        this.checked = state.checked;
         this.post = state.post;
         this.consistentToServer = state.consistentToServer;
     }

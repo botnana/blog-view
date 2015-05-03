@@ -5,7 +5,9 @@ var BlogStore = require('../stores/BlogStore');
 var _ = require('lodash');
 var NavLink = require('flux-router-component').NavLink;
 var showBlog = require('../actions/showBlog');
-    
+var checkPost = require('../actions/checkPost');
+var uncheckPost = require('../actions/uncheckPost');
+
 var Section = React.createClass({
     render: function() {
         var self = this;
@@ -38,7 +40,7 @@ var Section = React.createClass({
                         return <article key={key}>
                             {img}
                             <header>
-                                <input type="checkbox"/>
+                                <input type="checkbox" name={post.md} checked={self.props.isChecked(post.md)} onChange={self.props.handleCheck}/>
                                 <h3>
                                     <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
                                 </h3>
@@ -81,9 +83,11 @@ var Blog = React.createClass({
                 }
             });
         });
+
         return {
             blogTitle: store.blogTitle, 
             list: list,
+            checked: store.checked,
             sectionNames: sectionNames,
             sections: sections,
             consistentToServer: consistentToServer
@@ -95,11 +99,22 @@ var Blog = React.createClass({
             this.props.context.executeAction(showBlog, {});
         }
     },
+    isChecked: function(md) {
+        return this.state.checked.indexOf(md)>=0;
+    },
+    handleCheck: function(ev) {
+        if(ev.target.checked) {
+            this.props.context.executeAction(checkPost, {md: ev.target.name});
+        } else {
+            this.props.context.executeAction(uncheckPost, {md: ev.target.name});
+        }
+    },
     render: function() {
         var self = this;
         var sections = _.map(self.state.sectionNames, function(sectionName) {
             return ( 
-                <Section key={sectionName} blogPath={self.props.blogPath} list={self.state.sections[sectionName]} sectionName={sectionName}/>
+                <Section key={sectionName} blogPath={self.props.blogPath} list={self.state.sections[sectionName]} sectionName={sectionName}
+                    isChecked={self.isChecked} handleCheck={self.handleCheck}/>
             );
         });
         return (
