@@ -17,7 +17,8 @@ var BlogStore = createStore({
         'CHECK_POST': 'checkPost',
         'UNCHECK_POST': 'uncheckPost',
         'CREATE_POST_SUCCESS': 'createPostSuccess',
-        'DELETE_POST_SUCCESS': 'deletePostSuccess'
+        'DELETE_POST_SUCCESS': 'deletePostSuccess',
+        'UPDATE_POST_SUCCESS': 'updatePostSuccess'
     },
     initialize: function () {
         this.blogTitle = 'Blog';
@@ -61,6 +62,10 @@ var BlogStore = createStore({
         if(idx >= 0) {
             this.checked.splice(idx, 1);
         }
+        this.consistentToServer = false;
+        this.emitChange();
+    },
+    updatePostSuccess: function(result) {
         this.consistentToServer = false;
         this.emitChange();
     },

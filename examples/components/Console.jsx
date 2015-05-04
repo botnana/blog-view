@@ -16,7 +16,12 @@ var createPost = require('../../actions/createPost');
 var deletePost = require('../../actions/deletePost');
 var showPost = require('../../actions/showPost');
 var uncheckPost = require('../../actions/uncheckPost');
+var updatePost = require('../../actions/updatePost');
+var uuid = require('node-uuid');
 
+var NONE= 0;
+var CREATING = 1;
+var UPDATING = 2;
 var Console = React.createClass({
     mixins: [FluxibleMixin],
     statics: {
@@ -24,11 +29,14 @@ var Console = React.createClass({
     },
     getInitialState: function() {
         return {
-            hiddenForm: true,
+            visibleForm: false,
+            editingMode: NONE,
+            post_id: "",
             title: "",
             author: "",
             tags: "",
-            marked: ""
+            preview: "",
+            content: ""
         };
     },
     handleTitle: function(ev) {
@@ -40,25 +48,51 @@ var Console = React.createClass({
     handleTags: function(ev) {
         this.setState({tags: ev.target.value});
     },
-    handleMarked: function(ev) {
-        this.setState({marked: ev.target.value});
+    handlePreview: function(ev) {
+        this.setState({preview: ev.target.value});
+    },
+    handleContent: function(ev) {
+        this.setState({content: ev.target.value});
     },
     handleSubmit: function(ev) {
         ev.preventDefault();
         var post = {
-            title: this.refs.title.getDOMNode().value,
-            author: this.refs.author.getDOMNode().value,
-            tags: this.refs.tags.getDOMNode().value.split(',').map(function(item) { return item.trim(); }),
-            marked: this.refs.marked.getDOMNode().value
+            title: this.state.title,
+            author: this.state.author,
+            tags: this.state.tags.split(',').map(function(item) { return item.trim(); }),
+            preview: this.state.preview,
+            content: this.state.content
         }
-        this.props.context.executeAction(createPost, post);
-        this.refs.title.getDOMNode().value = '';
-        this.refs.author.getDOMNode().value = '';
-        this.refs.tags.getDOMNode().value = '';
-        this.refs.marked.getDOMNode().value = '';
+        if(this.state.editingMode===CREATING) {
+            post.id = uuid.v4();
+            this.props.context.executeAction(createPost, post);
+        } else {
+            post.id = this.state.post_id;
+            this.props.context.executeAction(updatePost, post);
+            this.setState({visibleForm: false});
+        }
+        this.setState({
+            post_id: "",
+            title: "",
+            author: "",
+            tags: "",
+            preview: "",
+            content: ""
+        });
     },
     handleCreation: function(ev) {
-        this.setState({hiddenForm: this.state.hiddenForm ? false : true});
+        if(this.state.visibleForm) {
+            this.setState({
+                visibleForm: false,
+                editingMode: NONE
+            });
+        } else {
+            this.setState({
+                visibleForm: true,
+                editingMode: CREATING
+            });
+            this.setState({post_id: "", title: "", author: "", tags: "", preview: "", content: ""});
+        }
     },
     handleDeletion: function(ev) {
         var self = this;
@@ -70,22 +104,32 @@ var Console = React.createClass({
     handleUpdate: function(ev) {
         var self = this;
         var checked = this.getStore(BlogStore).checked;
-        if(checked.length>0 && this.state.hiddenForm) {
-            this.setState({hiddenForm: this.state.hiddenForm ? false : true});
+        if(this.state.visibleForm) {
+            this.setState({
+                visibleForm: false,
+                editingMode: NONE
+            });
+        } else if(checked.length>0) {
+            this.setState({
+                visibleForm: true,
+                editingMode: UPDATING
+            });
             this.props.context.executeAction(showPost, {id: checked[0]});
             this.props.context.executeAction(uncheckPost, {id: checked[0]});
-        } else if(!this.state.hiddenForm) {
-            this.setState({hiddenForm: this.state.hiddenForm ? false : true});
         }
     },
     onChange: function () {
-        console.log('Console onChange');
         var post = this.getStore(BlogStore).getPost();
-        console.log(post);
-        if(!this.state.hiddenForm) {
-            this.setState({title: post.post.data.title, author: post.post.data.author, tags: post.post.data.tags});
-            console.log(post);
-            console.log(this.state);
+        if(post.post) {
+            if(this.state.visibleForm && this.state.editingMode === UPDATING) {
+                this.setState({
+                    post_id: post.post.data.id,
+                    title: post.post.data.title,
+                    author: post.post.data.author,
+                    tags: post.post.data.tags.join(', '),
+                    preview: post.post.data.preview,
+                    content: post.post.data.content});
+            }
         }
     },
     render: function() {
@@ -95,18 +139,19 @@ var Console = React.createClass({
                 <button className="pure-button" onClick={this.handleUpdate}>修改</button>
                 <button className="pure-button" onClick={this.handleDeletion}>刪除</button></div>
             <div className="clr" />
-            <form ref="form" className={this.state.hiddenForm ? "pure-form hidden" : "pure-form"}>
+            <form ref="form" className={this.state.visibleForm ? "pure-form" : "pure-form hidden"}>
                 <fieldset>
                     <legend>建立新文章</legend>
                     <div>
-                        <input type="text" ref="title" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
+                        <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
                     </div>
                     <div>
-                        <input type="text" ref="author" placeholder="作者" value={this.state.author} onChange={this.handleAuthor}/>
-                        <input type="text" ref="tags" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
+                        <input type="text" placeholder="作者" value={this.state.author} onChange={this.handleAuthor}/>
+                        <input type="text" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
                     </div>
                     <div>
-                        <textarea ref="marked" className="pure-input-1" placeholder="內容" value={this.state.marked} onChange={this.handleMarked}></textarea>
+                        <input type="text" className="pure-u-1" placeholder="簡介" value={this.state.preview} onChange={this.handlePreview}/>
+                        <textarea className="pure-input-1" placeholder="內容" value={this.state.content} onChange={this.handleContent}></textarea>
                     </div>
                     <button type="submit" className="pure-button pure-button-primary" onClick={this.handleSubmit}>確定</button>
                 </fieldset>
