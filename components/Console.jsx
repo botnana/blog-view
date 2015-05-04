@@ -3,25 +3,21 @@
  * Copyrights licensed under the ISC License. See the accompanying LICENSE file for terms.
  */
 'use strict';
-/**
- * Copyright 2015, Mapacode Inc.
- * Copyrights licensed under the ISC License. See the accompanying LICENSE file for terms.
- */
-'use strict';
 
 var React = require('react');
 var FluxibleMixin = require('fluxible').Mixin;
-var BlogStore = require('../../stores/BlogStore');
-var createPost = require('../../actions/createPost');
-var deletePost = require('../../actions/deletePost');
-var showPost = require('../../actions/showPost');
-var uncheckPost = require('../../actions/uncheckPost');
-var updatePost = require('../../actions/updatePost');
+var BlogStore = require('../stores/BlogStore');
+var createPost = require('../actions/createPost');
+var deletePost = require('../actions/deletePost');
+var showPost = require('../actions/showPost');
+var uncheckPost = require('../actions/uncheckPost');
+var updatePost = require('../actions/updatePost');
 var uuid = require('node-uuid');
 
 var NONE= 0;
 var CREATING = 1;
 var UPDATING = 2;
+
 var Console = React.createClass({
     mixins: [FluxibleMixin],
     statics: {
@@ -141,7 +137,7 @@ var Console = React.createClass({
             <div className="clr" />
             <form ref="form" className={this.state.visibleForm ? "pure-form" : "pure-form hidden"}>
                 <fieldset>
-                    <legend>建立新文章</legend>
+                    <legend>{this.state.editingMode === CREATING ? "建立" : "修改"}</legend>
                     <div>
                         <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
                     </div>

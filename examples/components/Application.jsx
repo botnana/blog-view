@@ -11,7 +11,7 @@ var RouterMixin = require('flux-router-component').RouterMixin;
 var Nav = require('./Nav');
 var Blog = require('../../components/Blog');
 var Post = require('../../components/Post');
-var Console = require('./Console');
+var Console = require('../../components/Console');
 
 var Application = React.createClass({
     mixins: [RouterMixin, FluxibleMixin],
