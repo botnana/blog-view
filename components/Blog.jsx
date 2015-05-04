@@ -32,7 +32,7 @@ var Section = React.createClass({
                         if (post.img) {
                             img =
                                 <div className="thumb">
-                                    <NavLink href={self.props.blogPath + "/" + post.md}>
+                                    <NavLink href={self.props.blogPath + "/" + post.id}>
                                         <img src={post.img}></img>
                                     </NavLink>
                                 </div>;
@@ -40,9 +40,9 @@ var Section = React.createClass({
                         return <article key={key}>
                             {img}
                             <header>
-                                <input type="checkbox" name={post.md} checked={self.props.isChecked(post.md)} onChange={self.props.handleCheck}/>
+                                <input type="checkbox" name={post.id} checked={self.props.isChecked(post.id)} onChange={self.props.handleCheck}/>
                                 <h3>
-                                    <NavLink href={self.props.blogPath + "/" + post.md}>{post.title}</NavLink>
+                                    <NavLink href={self.props.blogPath + "/" + post.id}>{post.title}</NavLink>
                                 </h3>
                                 <p>
                                     {moment} {author} {price}
@@ -99,14 +99,14 @@ var Blog = React.createClass({
             this.props.context.executeAction(showBlog, {});
         }
     },
-    isChecked: function(md) {
-        return this.state.checked.indexOf(md)>=0;
+    isChecked: function(id) {
+        return this.state.checked.indexOf(id)>=0;
     },
     handleCheck: function(ev) {
         if(ev.target.checked) {
-            this.props.context.executeAction(checkPost, {md: ev.target.name});
+            this.props.context.executeAction(checkPost, {id: ev.target.name});
         } else {
-            this.props.context.executeAction(uncheckPost, {md: ev.target.name});
+            this.props.context.executeAction(uncheckPost, {id: ev.target.name});
         }
     },
     render: function() {

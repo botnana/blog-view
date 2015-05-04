@@ -25,11 +25,11 @@ module.exports = {
         }
     },
     post: {
-        path: '/posts/:md',
+        path: '/posts/:id',
         method: 'get',
         page: 'post',
         action: function (context, payload, done) {
-            context.executeAction(showPost, {md: payload.params.md}, function (err) {
+            context.executeAction(showPost, {id: payload.params.id}, function (err) {
                 context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: 'Post | Blog | Botnana' });
                 done();
             });

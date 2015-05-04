@@ -44,20 +44,20 @@ var BlogStore = createStore({
         this.emitChange();
     },
     checkPost: function(payload) {
-        if(this.checked.indexOf(payload.md)<0) {
-            this.checked.push(payload.md);
+        if(this.checked.indexOf(payload.id)<0) {
+            this.checked.push(payload.id);
         }
         this.emitChange();
     },
     uncheckPost: function(payload) {
-        var idx = this.checked.indexOf(payload.md);
+        var idx = this.checked.indexOf(payload.id);
         if(idx>=0) {
             this.checked.splice(idx, 1);
         }
         this.emitChange();
     },
     deletePostSuccess: function(result) {
-        var idx = this.checked.indexOf(result.md);
+        var idx = this.checked.indexOf(result.id);
         if(idx >= 0) {
             this.checked.splice(idx, 1);
         }

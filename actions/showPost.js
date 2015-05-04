@@ -12,7 +12,7 @@ module.exports = function (context, payload, done) {
             done();
             return;
         }
-        context.dispatch('RECEIVE_POST_SUCCESS', {md: payload.md, post: post});
+        context.dispatch('RECEIVE_POST_SUCCESS', {id: payload.id, post: post});
         done();
     });
 };

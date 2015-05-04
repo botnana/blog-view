@@ -2,6 +2,7 @@ var Moment = require('./Moment.jsx');
 var FluxibleMixin = require('fluxible').Mixin;
 var BlogStore = require('../stores/BlogStore');
 var React = require('react');
+var marked = require('marked');
     
 var Post = React.createClass({
     mixins: [FluxibleMixin],
@@ -79,7 +80,7 @@ var Post = React.createClass({
                         <h1>{post.title}</h1>
                         <p>{moment} {author} {price}</p>
                     </header>
-                    <span dangerouslySetInnerHTML={{__html: post.content}} />
+                    <span dangerouslySetInnerHTML={{__html: marked(post.content)}} />
                 </div>
             );
         }
