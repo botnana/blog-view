@@ -29,7 +29,9 @@ var Console = React.createClass({
             editingMode: NONE,
             post_id: "",
             title: "",
+            published: "",
             author: "",
+            price: "",
             tags: "",
             preview: "",
             content: ""
@@ -38,8 +40,14 @@ var Console = React.createClass({
     handleTitle: function(ev) {
         this.setState({title: ev.target.value});
     },
+    handlePublished: function(ev) {
+        this.setState({published: ev.target.value});
+    },
     handleAuthor: function(ev) {
         this.setState({author: ev.target.value});
+    },
+    handlePrice: function(ev) {
+        this.setState({price: ev.target.value});
     },
     handleTags: function(ev) {
         this.setState({tags: ev.target.value});
@@ -54,7 +62,9 @@ var Console = React.createClass({
         ev.preventDefault();
         var post = {
             title: this.state.title,
+            published: this.state.published,
             author: this.state.author,
+            price: this.state.price,
             tags: this.state.tags.split(',').map(function(item) { return item.trim(); }),
             preview: this.state.preview,
             content: this.state.content
@@ -70,7 +80,9 @@ var Console = React.createClass({
         this.setState({
             post_id: "",
             title: "",
+            published: "",
             author: "",
+            price: "",
             tags: "",
             preview: "",
             content: ""
@@ -87,7 +99,15 @@ var Console = React.createClass({
                 visibleForm: true,
                 editingMode: CREATING
             });
-            this.setState({post_id: "", title: "", author: "", tags: "", preview: "", content: ""});
+            this.setState({
+                post_id: "",
+                title: "",
+                published: "",
+                author: "",
+                price: "",
+                tags: "",
+                preview: "",
+                content: ""});
         }
     },
     handleDeletion: function(ev) {
@@ -121,7 +141,9 @@ var Console = React.createClass({
                 this.setState({
                     post_id: post.post.data.id,
                     title: post.post.data.title,
+                    published: post.post.data.published,
                     author: post.post.data.author,
+                    price: post.post.data.price,
                     tags: post.post.data.tags.join(', '),
                     preview: post.post.data.preview,
                     content: post.post.data.content});
@@ -142,7 +164,9 @@ var Console = React.createClass({
                         <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
                     </div>
                     <div>
+                        <input type="text" placeholder="日期" value={this.state.published} onChange={this.handlePublished}/>
                         <input type="text" placeholder="作者" value={this.state.author} onChange={this.handleAuthor}/>
+                        <input type="text" placeholder="價格" value={this.state.price} onChange={this.handlePrice}/>
                         <input type="text" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
                     </div>
                     <div>
