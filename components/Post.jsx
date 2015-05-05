@@ -53,7 +53,7 @@ var Post = React.createClass({
                 </div>
             );
         } else {
-            var post = this.state.post.data;
+            var post = this.state.data;
             var moment = '';
             var author = '';
             var price = '';

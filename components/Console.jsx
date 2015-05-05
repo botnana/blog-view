@@ -136,17 +136,17 @@ var Console = React.createClass({
     },
     onChange: function () {
         var post = this.getStore(BlogStore).getPost();
-        if(post.post) {
+        if(post&&post.data) {
             if(this.state.visibleForm && this.state.editingMode === UPDATING) {
                 this.setState({
-                    post_id: post.post.data.id,
-                    title: post.post.data.title,
-                    published: post.post.data.published,
-                    author: post.post.data.author,
-                    price: post.post.data.price,
-                    tags: post.post.data.tags.join(', '),
-                    preview: post.post.data.preview,
-                    content: post.post.data.content});
+                    post_id: post.data.id,
+                    title: post.data.title,
+                    published: post.data.published,
+                    author: post.data.author,
+                    price: post.data.price,
+                    tags: post.data.tags.join(', '),
+                    preview: post.data.preview,
+                    content: post.data.content});
             }
         }
     },
