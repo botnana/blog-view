@@ -13,6 +13,7 @@ var showPost = require('../actions/showPost');
 var uncheckPost = require('../actions/uncheckPost');
 var updatePost = require('../actions/updatePost');
 var uuid = require('node-uuid');
+var moment = require('moment');
 
 var NONE= 0;
 var CREATING = 1;
@@ -23,6 +24,35 @@ var Console = React.createClass({
     statics: {
         storeListeners: [BlogStore]
     },
+    getConfig: function() {
+        var config = this.props.config;
+        var authorConfig = {
+            hidden: false,
+            value: ''
+        };
+        var publishedConfig = {
+            hidden: false,
+            generator: function () {
+                return moment().format('YYYY-MM-DD');
+            }
+        };
+        if(config) {
+            if(config.author) {
+                authorConfig.hidden = config.author.hidden || false;
+                authorConfig.value = config.author.value || '';
+            }
+            if(config.published) {
+                publishedConfig.hidden = config.published.hidden || false;
+                if(config.published.generator) {
+                    publishedConfig.generator = config.published.generator;
+                }
+            }
+        }
+        return {
+            author: authorConfig,
+            published: publishedConfig
+        };
+    },
     getInitialState: function() {
         return {
             visibleForm: false,
@@ -30,7 +60,7 @@ var Console = React.createClass({
             post_id: "",
             title: "",
             published: "",
-            author: "",
+            author: this.getConfig().author.value,
             price: "",
             tags: "",
             preview: "",
@@ -80,8 +110,8 @@ var Console = React.createClass({
         this.setState({
             post_id: "",
             title: "",
-            published: "",
-            author: "",
+            published: this.getConfig().published.generator(),
+            author: this.getConfig().author.value,
             price: "",
             tags: "",
             preview: "",
@@ -102,8 +132,8 @@ var Console = React.createClass({
             this.setState({
                 post_id: "",
                 title: "",
-                published: "",
-                author: "",
+                published: this.getConfig().published.generator(),
+                author: this.getConfig().author.value,
                 price: "",
                 tags: "",
                 preview: "",
@@ -151,6 +181,15 @@ var Console = React.createClass({
         }
     },
     render: function() {
+        var config = this.getConfig();
+        var authorField = '';
+        var publishedField = '';
+        if(!config.author.hidden) {
+            authorField = <input type="text" placeholder="作者" value={this.state.author} onChange={this.handleAuthor}/>;
+        }
+        if(!config.published.hidden) {
+            publishedField = <input type="text" placeholder="日期" value={this.state.published} onChange={this.handlePublished}/>;
+        }
         return <div className="console">
             <div className="buttons">
                 <button className="pure-button" onClick={this.handleCreation}>建立</button>
@@ -164,8 +203,8 @@ var Console = React.createClass({
                         <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
                     </div>
                     <div>
-                        <input type="text" placeholder="日期" value={this.state.published} onChange={this.handlePublished}/>
-                        <input type="text" placeholder="作者" value={this.state.author} onChange={this.handleAuthor}/>
+                        {publishedField}
+                        {authorField}
                         <input type="text" placeholder="價格" value={this.state.price} onChange={this.handlePrice}/>
                         <input type="text" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
                     </div>

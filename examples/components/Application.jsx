@@ -12,6 +12,7 @@ var Nav = require('./Nav');
 var Blog = require('../../components/Blog');
 var Post = require('../../components/Post');
 var Console = require('../../components/Console');
+var consoleConfig = require('../configs/console');
 
 var Application = React.createClass({
     mixins: [RouterMixin, FluxibleMixin],
@@ -31,7 +32,7 @@ var Application = React.createClass({
         switch (this.state.currentPageName) {
             case 'home':
                 output = <div>
-                    <Console context={this.props.context}/>
+                    <Console context={this.props.context} config={consoleConfig}/>
                     <Blog context={this.props.context} blogPath={this.props.context.blogPath}/>
                 </div>;
                 break;
