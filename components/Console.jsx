@@ -118,6 +118,10 @@ var Console = React.createClass({
             content: ""
         });
     },
+    handleUpload: function(ev) {
+        // 因為不能使用 form inside form，multipart 要如何處理？似乎要由 javascript 來產生這個 request 給 multer。
+        console.log("handleUpload");
+    },
     handleCreation: function(ev) {
         if(this.state.visibleForm) {
             this.setState({
@@ -196,25 +200,35 @@ var Console = React.createClass({
                 <button className="pure-button" onClick={this.handleUpdate}>修改</button>
                 <button className="pure-button" onClick={this.handleDeletion}>刪除</button></div>
             <div className="clr" />
-            <form ref="form" className={this.state.visibleForm ? "pure-form" : "pure-form hidden"}>
-                <fieldset>
-                    <legend>{this.state.editingMode === CREATING ? "建立" : "修改"}</legend>
-                    <div>
-                        <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
+            <div className={this.state.visibleForm ? "form" : "form hidden"}>
+                <form ref="form" className="pure-form">
+                    <fieldset>
+                        <legend>{this.state.editingMode === CREATING ? "建立" : "修改"}</legend>
+                        <div>
+                            <input type="text" className="pure-u-1" placeholder="標題" value={this.state.title} onChange={this.handleTitle}/>
+                        </div>
+                        <div>
+                            {publishedField}
+                            {authorField}
+                            <input type="text" placeholder="價格" value={this.state.price} onChange={this.handlePrice}/>
+                            <input type="text" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
+                        </div>
+                        <div>
+                            <input type="text" className="pure-u-1" placeholder="簡介" value={this.state.preview} onChange={this.handlePreview}/>
+                            <textarea className="pure-input-1" placeholder="內容" value={this.state.content} onChange={this.handleContent}></textarea>
+                        </div>
+                    </fieldset>
+                </form>
+                <div className="lowerPanel">
+                    <div className="pure-button pure-button-primary" onClick={this.handleSubmit}>
+                        <span>確定</span>
                     </div>
-                    <div>
-                        {publishedField}
-                        {authorField}
-                        <input type="text" placeholder="價格" value={this.state.price} onChange={this.handlePrice}/>
-                        <input type="text" placeholder="標籤" value={this.state.tags} onChange={this.handleTags}/>
+                    <div className="pure-button pure-button-primary">
+                        <span>上傳圖片</span>
+                        <input type="file" onClick={this.handleUpload}></input>
                     </div>
-                    <div>
-                        <input type="text" className="pure-u-1" placeholder="簡介" value={this.state.preview} onChange={this.handlePreview}/>
-                        <textarea className="pure-input-1" placeholder="內容" value={this.state.content} onChange={this.handleContent}></textarea>
-                    </div>
-                    <button type="submit" className="pure-button pure-button-primary" onClick={this.handleSubmit}>確定</button>
-                </fieldset>
-            </form>
+                </div>
+            </div>
         </div>;
     }
 });
