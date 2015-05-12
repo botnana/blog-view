@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ace-builds": "git+https://github.com/ajaxorg/ace-builds",
-    "botnana-blog-service": "git+ssh://botnana@botnana.mapacode.tw/botnana-blog-service.git",
+    "botnana-blog-service": "git+https://github.com/botnana/blog-service.git",
     "flux-router-component": "^0.5.14",
     "fluxible": "^0.2.4",
     "fluxible-plugin-fetchr": "^0.2.3",
